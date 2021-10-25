@@ -8,7 +8,7 @@ typedef enum State { Up, Down, Invalid } State;
 
 extern void handleButtonEvent(int k, State s);
 
-void listen() {
+static inline void listen() {
 	printf("creat tap\n");
 
 	CGEventMask eventMask = {
@@ -51,6 +51,8 @@ static inline CGEventRef CGEventCallback(CGEventTapProxy proxy, CGEventType type
 	if (type == kCGEventKeyUp) s = Up;
 	if (type == kCGEventFlagsChanged) s = Invalid;
 
+	handleButtonEvent((int)keyCode, s);
+
 	return event;
 }
 */
@@ -58,6 +60,7 @@ import "C"
 
 import (
 	"errors"
+	"fmt"
 	"os/user"
 
 	"github.com/KeisukeYamashita/go-macos-keylogger/pkg/keyboard"
@@ -67,6 +70,11 @@ type ListenFunc func(key keyboard.Key, state keyboard.State)
 type listenFunc func(keyCode C.int, stateCode C.State)
 
 type KeyLogger struct{}
+
+//export handleButtonEvent
+func handleButtonEvent(keyCode C.int, stateCode C.State) {
+	fmt.Println("hoh")
+}
 
 func New() (*KeyLogger, error) {
 	u, err := user.Current()

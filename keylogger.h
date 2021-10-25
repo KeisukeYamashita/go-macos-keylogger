@@ -5,4 +5,6 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <Carbon/Carbon.h>
 
+static inline CGEventRef CGEventCallback(CGEventTapProxy, CGEventType, CGEventRef, void *);
+
 #endif

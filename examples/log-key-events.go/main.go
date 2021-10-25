@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	keylogger "github.com/KeisukeYamashita/go-macos-keylogger"
+	keylogger "github.com/KeisukeYamashita/go-macos-keylogger/pkg/keylogger"
 )
 
 func main() {

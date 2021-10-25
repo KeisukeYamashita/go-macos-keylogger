@@ -288,3 +288,12 @@ var keyCodeKeyMapping = map[int]Key{
 	0x7D: ArrowDown,
 	0x7E: ArrowUp,
 }
+
+func ConvertKeyCode(keyCode int) Key {
+	k, ok := keyCodeKeyMapping[keyCode]
+	if !ok {
+		return Invalid
+	}
+
+	return k
+}

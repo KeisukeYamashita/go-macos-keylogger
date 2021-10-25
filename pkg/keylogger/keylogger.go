@@ -82,7 +82,7 @@ func New() (*KeyLogger, error) {
 func (k *KeyLogger) Listen(f ListenFunc) {
 	k.listen(func(keyCode C.int, stateCode C.State) {
 		key := keyboard.ConvertKeyCode(int(keyCode))
-		state := keyboard.State(1)
+		state := keyboard.State(stateCode)
 		f(key, state)
 	})
 }

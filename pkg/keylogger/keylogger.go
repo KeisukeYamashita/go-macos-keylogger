@@ -6,6 +6,8 @@ package keylogger
 
 typedef enum State { Up, Down, Invalid } State;
 
+extern void handleButtonEvent(int k, State s);
+
 void listen() {
 	printf("creat tap\n");
 
@@ -48,6 +50,7 @@ static inline CGEventRef CGEventCallback(CGEventTapProxy proxy, CGEventType type
 	if (type == kCGEventKeyDown) s = Down;
 	if (type == kCGEventKeyUp) s = Up;
 	if (type == kCGEventFlagsChanged) s = Invalid;
+
 	return event;
 }
 */
@@ -63,8 +66,7 @@ import (
 type ListenFunc func(key keyboard.Key, state keyboard.State)
 type listenFunc func(keyCode C.int, stateCode C.State)
 
-type KeyLogger struct {
-}
+type KeyLogger struct{}
 
 func New() (*KeyLogger, error) {
 	u, err := user.Current()

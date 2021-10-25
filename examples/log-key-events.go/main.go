@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
-	keylogger "github.com/KeisukeYamashita/go-macos-keylogger/pkg/keylogger"
+	"github.com/KeisukeYamashita/go-macos-keylogger/pkg/keyboard"
+	"github.com/KeisukeYamashita/go-macos-keylogger/pkg/keylogger"
 )
 
 func main() {
@@ -12,5 +14,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	kl.Listen(nil)
+	f := func(key keyboard.Key, state keyboard.State) {
+		fmt.Println(key)
+	}
+
+	kl.Listen(f)
 }

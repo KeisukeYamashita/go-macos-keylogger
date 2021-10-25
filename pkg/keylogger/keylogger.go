@@ -9,8 +9,6 @@ typedef enum State { Up, Down, Invalid } State;
 extern void handleButtonEvent(int k, State s);
 
 static inline void listen() {
-	printf("creat tap\n");
-
 	CGEventMask eventMask = {
 		CGEventMaskBit(kCGEventKeyDown) |
         CGEventMaskBit(kCGEventKeyUp)
@@ -20,15 +18,11 @@ static inline void listen() {
 		kCGSessionEventTap, kCGHeadInsertEventTap, 0, eventMask, CGEventCallback, NULL
 	);
 
-	printf("create eventtap\n");
-
     // Exit the program if unable to create the event tap.
     if(!eventTap) {
         fprintf(stderr, "ERROR: Unable to create event tap.\n");
         exit(1);
     }
-
-	printf("create eventtap success\n");
 
     // Create a run loop source and add enable the event tap.
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
@@ -40,7 +34,6 @@ static inline void listen() {
 
 // The following callback method is invoked on every keypress.
 static inline CGEventRef CGEventCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon) {
-	printf("helol\n");
     if (type != kCGEventKeyDown && type != kCGEventFlagsChanged && type != kCGEventKeyUp) { return event; }
 
     // Retrieve the incoming keycode.
@@ -60,7 +53,6 @@ import "C"
 
 import (
 	"errors"
-	"fmt"
 	"os/user"
 
 	"github.com/KeisukeYamashita/go-macos-keylogger/pkg/keyboard"
@@ -71,9 +63,11 @@ type listenFunc func(keyCode C.int, stateCode C.State)
 
 type KeyLogger struct{}
 
+var _f listenFunc
+
 //export handleButtonEvent
 func handleButtonEvent(keyCode C.int, stateCode C.State) {
-	fmt.Println("hoh")
+	_f(keyCode, stateCode)
 }
 
 func New() (*KeyLogger, error) {
@@ -98,5 +92,6 @@ func (k *KeyLogger) Listen(f ListenFunc) {
 }
 
 func (k *KeyLogger) listen(f listenFunc) {
+	_f = f
 	C.listen()
 }

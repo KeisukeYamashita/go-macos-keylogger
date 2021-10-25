@@ -56,9 +56,12 @@ import "C"
 import (
 	"errors"
 	"os/user"
+
+	"github.com/KeisukeYamashita/go-macos-keylogger/pkg/keyboard"
 )
 
-type ListenFunc func(keyCode C.int, stateCode C.State)
+type ListenFunc func(key keyboard.Key, state keyboard.State)
+type listenFunc func(keyCode C.int, stateCode C.State)
 
 type KeyLogger struct {
 }
@@ -77,5 +80,9 @@ func New() (*KeyLogger, error) {
 }
 
 func (k *KeyLogger) Listen(f ListenFunc) {
+	k.listen(nil)
+}
+
+func (k *KeyLogger) listen(f listenFunc) {
 	C.listen()
 }

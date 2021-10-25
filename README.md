@@ -50,4 +50,4 @@ $ go run main.go
 
 ## LICENSE
 
-Copyright 2021 Go macOS KeyLogger contribuders. This package is released under the Apache License 2.0.
+Copyright 2021 Go macOS KeyLogger contributors. This package is released under the Apache License 2.0.

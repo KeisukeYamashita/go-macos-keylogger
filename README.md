@@ -48,6 +48,6 @@ $ go run main.go
 
 * [@KeisukeYamashita](https://github.com/KeisukeYamashita)
 
-## LICENS
+## LICENSE
 
 Copyright 2021 Go macOS KeyLogger contribuders. This package is released under the Apache License 2.0.
